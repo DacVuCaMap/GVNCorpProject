@@ -1,0 +1,2 @@
+-- đây là dự án về 1 trang web tải game ---
+sử dụng ngôn ngữ lập trình java cho backend,react cho front end

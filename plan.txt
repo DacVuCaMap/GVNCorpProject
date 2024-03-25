@@ -1,0 +1,23 @@
+-- thiết kế sơ lược về các đối tượng
+
+	về sản phẩm?
+		categories
+		product
+		product-image
+		tag-games
+		(gợi ý game thì làm như nào)
+	về client ?
+		account
+		role
+		token
+		user-rule
+	về tính năng(binh luan,chat voi admin,report san pham)?
+		comment(cần xem xét về lượng trữ lượng data)
+		(bổ sung rate game)
+		chat
+		report
+		
+		
+		
+		
+
