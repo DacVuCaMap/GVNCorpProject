@@ -8,6 +8,7 @@ import com.GVNCop.app.Repository.TokenRepository;
 import com.GVNCop.app.Request.AccountRequest;
 import com.GVNCop.app.Request.LoginRequest;
 import com.GVNCop.app.Response.AccountResponse;
+import com.GVNCop.app.SendMail.EmailServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +34,8 @@ public class AuthenticaionService {
     private final AccountService accountService;
     private final TokenRepository tokenRepository;
     private final JWTService jwtService;
-
+    private final ActiveTokenService activeTokenService;
+    private final EmailServiceImpl emailServiceImpl;
     //authentication manager
     private final AuthenticationManager authenticationManager;
 
@@ -68,10 +70,11 @@ public class AuthenticaionService {
             tokenRepository.saveAll(tokens);
         }
     }
-    public String RegisterAccount(AccountRequest accReq){
+    public String RegisterAccount(AccountRequest accReq,Long id,String domain){
         List<Role> roleList = roleRepository.findByName("user_role");
         //check roleList
         System.out.println(roleList);
+
         Set<Role> roleSet = roleList.stream().collect(Collectors.toSet());
         //get date dd-mm-yyyy
         LocalDate curDay=LocalDate.now();
@@ -80,10 +83,17 @@ public class AuthenticaionService {
                 .name(accReq.getName())
                 .wallet(0.0)
                 .createAt(Date.valueOf(curDay))
-                .phoneNumber(accReq.getPhoneNumber()).roleSet(roleSet).build();
+                .phoneNumber(accReq.getPhoneNumber()).roleSet(roleSet).active(false).build();
+        if (id!=null){
+            account.setId(id);
+        }
+
+        //generate active token
+        String activeToken = activeTokenService.generateActiveToken();
+        //send email
+        emailServiceImpl.sendActiveMail(domain,account.getEmail(),activeToken);
         //save into db
-        System.out.println("register "+ account);
         accountService.save(account);
-        return "dang ky xong "+ account.getName()+" time= "+curDay;
+        return "register "+ account.getEmail()+" time = "+curDay;
     }
 }

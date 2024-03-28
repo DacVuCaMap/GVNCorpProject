@@ -39,12 +39,12 @@ public class Account implements UserDetails {
     private String phoneNumber;
     @Column(name = "wallet")
     private Double wallet;
-
     //join table
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "acc_role",joinColumns = @JoinColumn(name = "acc_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleSet;
-
+    @Column(name="active")
+    private boolean active;
     @Column(name = "createAt")
     private Date createAt;
 

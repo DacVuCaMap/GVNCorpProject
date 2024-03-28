@@ -1,0 +1,10 @@
+shadui
+tailwind css
+
+lucide-react (logo)
+
+zod(validation)
+
+spinner-react(loading)
+
+axios(rest api)

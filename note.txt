@@ -1,3 +1,21 @@
 // tìm hiểu về các annotations, các final khai báo đối tượng
 
 //token when expiration and revoked should delete ?
+
+//add noftication vao db
+
+//add status acc để check lượng ng đang onl trong admindashboard	
+
+//sử dụng csrf khi 
+	Thao tác với dữ liệu người dùng (tạo, cập nhật, xóa)
+	Thay đổi cấu hình, cài đặt hệ thống
+	Gửi tin nhắn, đăng bình luận
+	Thực hiện giao dịch tài chính, thanh toán
+	Và bất kỳ tính năng nào có thể gây ra thay đổi dữ liệu hoặc trạng thái của ứng dụng
+
+
+//route api/
+		auth/
+		sec/(bao mat csrf)
+		admin/(bao mat csrf,admin)
+	

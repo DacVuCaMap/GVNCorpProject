@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -42,7 +43,8 @@ public class SecurityConfig {
         // cau hinh cors
         http.cors((cors)->cors.configurationSource(corsConfiguration()));
         // cau hinh csrf
-        http.csrf((csrf)->csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
+        http.csrf((csrf)->csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .requireCsrfProtectionMatcher(new AntPathRequestMatcher("api/sec/**")));
 //        http.csrf((csrf)->csrf.disable());
         http.logout((logout)->logout
                 .logoutUrl("/api/auth/logout")
@@ -55,7 +57,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfiguration(){
         CorsConfiguration corsConfiguration =new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("https://example.com"));
+        corsConfiguration.setAllowCredentials(true); // Cho phép gửi cookie
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
