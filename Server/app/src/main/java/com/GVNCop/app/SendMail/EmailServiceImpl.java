@@ -45,7 +45,7 @@ public class EmailServiceImpl implements EmailService{
 
     //active link
     public void sendActiveMail(String link,String accMail,String activeToken){
-        link = "http://localhost:3000/register"+activeToken;
+        link = "http://localhost:3000/register/"+activeToken;
         String htmlBody = "<html><body>\n" +
                 "<div style=\"text-align: center; background-color: rgb(212, 212, 212); border-radius: 5px; width: 900px; padding-bottom: 10px; overflow: hidden;\">\n" +
                 "    <img src=\"https://wallpapercave.com/wp/wp7985922.jpg\" height=\"100px\" alt=\"Company Image\" style=\"width: 100%; height: 200px; object-fit: cover; margin-bottom: 20px;\">\n" +

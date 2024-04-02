@@ -43,8 +43,10 @@ public class AuthenticationController {
     //login
     @PostMapping("/login")
     public ResponseEntity<?> loginAccount(@RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse){
-        System.out.println("vao login");
         AccountResponse accountResponse = authenticaionService.loginAccount(loginRequest);
+        if(!accountResponse.getStatus().equals("0")){
+            return ResponseEntity.badRequest().body(accountResponse.getMess());
+        }
         Cookie cookie = new Cookie("jwt",accountResponse.getAccessToken());
         cookie.setDomain("localhost");
         cookie.setHttpOnly(true);
@@ -61,7 +63,7 @@ public class AuthenticationController {
         //search unique email
         Account account = accountService.getAccByEmail(accReq.getEmail());
         Long id = null;
-        System.out.println(account);
+//        System.out.println(account);
         if (account!=null && account.isActive()){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
         } else if (account!=null && !account.isActive()) {
@@ -70,7 +72,7 @@ public class AuthenticationController {
         //validation
         var violation = objectValidator.validate(accReq);
         if (!violation.isEmpty()){
-            System.out.println(violation);
+//            System.out.println(violation);
             return ResponseEntity.badRequest().body(String.join(" | ",violation));
         }
         String reqUrl = request.getRequestURL().toString();
@@ -78,24 +80,20 @@ public class AuthenticationController {
         try {
             URI uri = new URI(reqUrl);
             URL url = uri.toURL();
-            domain = url.getProtocol() + "://" + url.getHost();
+            domain = url.getProtocol() + "://" + url.getAuthority();
         } catch (Exception e) {
             System.out.println(e);
         }
-        System.out.println("register account : "+accReq);
         return ResponseEntity.ok(authenticaionService.RegisterAccount(accReq,id,domain));
     }
-
-//    @PostMapping("email")
-//    public ResponseEntity<?> sendEmail(@RequestBody ActiveRequest activeRequest){
-//        System.out.println(activeRequest);
-//        // xu li get token tai day -> link
-//        return ResponseEntity.ok().body(emailService.sendActiveMail("",activeRequest.getAccMail()));
-//    }
-
-    @PostMapping("get-active")
-    public ResponseEntity<?> getActive(@RequestBody String activeString){
+    @PostMapping("/get-active/{activeString}")
+    public ResponseEntity<?> getActive(@PathVariable String activeString){
+        System.out.println("get active + activeString: "+activeString);
         ActiveToken activeToken = activeTokenService.getActiveTokenByStr(activeString);
-        return ResponseEntity.ok().body(activeToken);
+        if (activeToken==null){
+            return ResponseEntity.badRequest().body("khong co trong db");
+        }
+        activeTokenService.deleteActiveToken(activeToken);
+        return ResponseEntity.ok().body(activeToken.getAccount().getEmail());
     }
 }

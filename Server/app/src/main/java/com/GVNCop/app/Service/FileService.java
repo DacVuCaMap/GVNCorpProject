@@ -46,5 +46,7 @@ public class FileService {
             return "false";
         }
     }
-
+    public String getAvtUrl(String nameFile){
+        return urlMain+"uploads/Avatar/"+nameFile;
+    }
 }

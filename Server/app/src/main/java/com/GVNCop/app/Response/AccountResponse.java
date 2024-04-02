@@ -9,4 +9,6 @@ public class AccountResponse {
 
     private String accessToken;
     private String name;
+    private String status;
+    private String mess;
 }

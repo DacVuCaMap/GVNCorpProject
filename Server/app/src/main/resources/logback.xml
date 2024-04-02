@@ -1,0 +1,23 @@
+<configuration>
+    <!-- Console appender configuration -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File appender configuration -->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>logs/myapp.log</file> <!-- Đường dẫn và tên file log -->
+        <append>true</append> <!-- Nếu true, log sẽ được ghi tiếp vào cuối file -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger configuration -->
+    <root level="info">
+        <appender-ref ref="console"/> <!-- Kết nối console appender -->
+        <appender-ref ref="file"/> <!-- Kết nối file appender -->
+    </root>
+</configuration>

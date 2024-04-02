@@ -1,5 +1,3 @@
-// tìm hiểu về các annotations, các final khai báo đối tượng
-
 //token when expiration and revoked should delete ?
 
 //add noftication vao db
@@ -18,4 +16,5 @@
 		auth/
 		sec/(bao mat csrf)
 		admin/(bao mat csrf,admin)
-	
+//first step set avatar , chọn sở thích game
+// 1 game chứa nhiều cate

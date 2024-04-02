@@ -14,7 +14,6 @@ public class AccountRequest {
     private String password;
     @NotNull
     private String name;
-    private String avatar;
     @Pattern(regexp = "^[0-9]+$",message = "must be number")
     private String phoneNumber;
 

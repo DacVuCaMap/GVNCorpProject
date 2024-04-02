@@ -8,3 +8,5 @@ zod(validation)
 spinner-react(loading)
 
 axios(rest api)
+
+npm install react-transition-group (phục vụ transition)

@@ -19,7 +19,7 @@ public class ActiveToken {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accId")
-    private Account accId;
+    private Account account;
     @Column(name = "activeTokenName")
     private String activeTokenName;
     @Column(name = "revoked")
